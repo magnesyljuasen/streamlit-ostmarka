@@ -676,7 +676,6 @@ def main():
         st.info("Resultatene som vises her gjelder for alle bygg i området.", icon="ℹ️")
         st.write("**Varighetskurver for hele området**")
         df = csv_to_df(folder_path = "data")
-        st.write(df)
         df = df.multiply(1000)
     #   df = select_scenario(df)
         #color_sequence = px.colors.qualitative.Dark2
