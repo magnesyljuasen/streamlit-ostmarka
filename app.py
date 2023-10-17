@@ -718,7 +718,7 @@ def main():
     
     with tab1_site:
         st.header("Energiscenarier")
-        st.write("""Det er simulert 10 ulike scenarier som vises nedenfor. 
+        st.write("""Det er simulert 6 ulike scenarier som vises nedenfor. 
                 Disse er preprossesert, **men fullt mulig å konfigurere og definere som man vil**. 
                 Inndata til simuleringene er et excel-ark der man kan velge prosentsatser for ulike tiltak i ulike energiområder. """)
         
