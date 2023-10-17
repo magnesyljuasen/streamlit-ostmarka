@@ -696,7 +696,8 @@ def main():
         fig = plot_dataframe(df1 = df, color_sequence = color_sequence, sorting = True)
         st.plotly_chart(fig, use_container_width = True, config = {'displayModeBar': False})
         with st.expander("Se data"):
-            st.write(df)
+            df3 = sort_columns_high_to_low(df)
+            st.write(df3)
 
         #--
         st.write("**Glidende gjennomsnitt**")
