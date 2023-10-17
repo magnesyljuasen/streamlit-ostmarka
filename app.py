@@ -139,8 +139,8 @@ def plot_dataframe(df1, color_sequence, sorting = True):
     
  
     fig.update_yaxes(
-        range=[0, 300],
-        title_text='Effekt [MW]',
+        range=[0, 450],
+        title_text='Effekt [kW]',
         mirror=True,
         ticks="outside",
         showline=True,
@@ -444,7 +444,7 @@ def __plot_building_statistics(df2, show_largest = True):
 def show_building_statistics():
     show_largest = st.toggle("Vis kun de 10 største bygningstypene", value = True)
     st.warning("Ikke delt inn i områder enda")
-    tab1, tab2, tab3, tab4 = st.tabs(["Hele området", "Fjernvarmeområder", "Tynt løsmassedekke", "Tykt løsmassedekke"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Hele området", "Planområde", "Delområde 1", "Delområde 2"])
     df = pd.read_csv("data/Referansesituasjon_filtered.csv")
     df1 = df.copy()
     df2 = df.copy()
@@ -566,11 +566,11 @@ def show_metrics(df, color_sequence, sorting = "energi"):
     df = df[sorted_columns]
     options = df.columns
     reference_max = np.max(df["Referansesituasjon"])
-    reference_sum = np.sum(df["Referansesituasjon"]) / 1000
+    reference_sum = np.sum(df["Referansesituasjon"])
     for i in range(0, len(options)):
         series = df[options[i]]
-        max_value = rounding_to_int(np.max(series))
-        sum_value = rounding_to_int(np.sum(series)/1000)
+        max_value = rounding_to_int((np.max(series)))
+        sum_value = rounding_to_int((np.sum(series)))
         max_value_reduction = int(((reference_max - max_value)/reference_max) * 100)
         sum_value_reduction = int(((reference_sum - sum_value)/reference_sum) * 100)
         with st.container():
@@ -600,9 +600,9 @@ def show_metrics(df, color_sequence, sorting = "energi"):
                 delta_2 = "Ingen reduksjon"
 
             with column_1:
-                st.metric(f"""1. Maksimalt behov for tilført el-effekt fra el-nettet""", value = f"{max_value:,} MW".replace(",", " "), delta = delta_1, delta_color=delta_color_1)
+                st.metric(f"""1. Maksimalt behov for tilført el-effekt fra el-nettet""", value = f"{max_value:,} kW".replace(",", " "), delta = delta_1, delta_color=delta_color_1)
             with column_2:
-                st.metric(f"""1. Behov for tilført el-energi fra el-nettet""", value = f"{sum_value:,} GWH/år".replace(",", " "), delta = delta_2, delta_color=delta_color_2)
+                st.metric(f"""1. Behov for tilført el-energi fra el-nettet""", value = f"{sum_value:,} kWh/år".replace(",", " "), delta = delta_2, delta_color=delta_color_2)
             #--
             df1 = pd.read_csv(f"data/{df.columns[i]}_filtered.csv", low_memory = False)
             bergvarme_count = len(df1[df1['grunnvarme'] == True])
@@ -638,7 +638,7 @@ def show_metrics(df, color_sequence, sorting = "energi"):
                     gridcolor="lightgrey",
                 )
                 fig.update_yaxes(
-                    range=[0, 4000],
+                    range=[0, 30],
                     tickformat=",",
                     ticks="outside",
                     linecolor="black",
@@ -661,7 +661,7 @@ def show_metrics(df, color_sequence, sorting = "energi"):
 
 def main():
     st.set_page_config(
-    page_title="Nedre Glomma",
+    page_title="Østmarka",
     page_icon="📈",
     layout="centered")
 
@@ -676,6 +676,8 @@ def main():
         st.info("Resultatene som vises her gjelder for alle bygg i området.", icon="ℹ️")
         st.write("**Varighetskurver for hele området**")
         df = csv_to_df(folder_path = "data")
+        st.write(df)
+        df = df.multiply(1000)
     #   df = select_scenario(df)
         #color_sequence = px.colors.qualitative.Dark2
         color_sequence = [
