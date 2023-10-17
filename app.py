@@ -139,7 +139,7 @@ def plot_dataframe(df1, color_sequence, sorting = True):
     
  
     fig.update_yaxes(
-        range=[0, 450],
+        range=[0, 600],
         title_text='Effekt [kW]',
         mirror=True,
         ticks="outside",
@@ -209,8 +209,8 @@ def plot_dataframe_moving_average(df1, color_sequence = "red", window_size = 168
 
 
     fig.update_yaxes(
-        range=[0, 300],
-        title_text='Effekt [MW]',
+        range=[0, 600],
+        title_text='Effekt [kW]',
         mirror=True,
         ticks="outside",
         showline=True,
@@ -252,7 +252,7 @@ def merge_plots(fig1, fig2):
 
     fig.update_yaxes(
         range=[0, 600],
-        title_text='Effekt [MW]',
+        title_text='Effekt [kW]',
         mirror=True,
         ticks="outside",
         showline=True,
